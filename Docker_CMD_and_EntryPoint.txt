@@ -1,0 +1,32 @@
+CMD and Entry point
+
+CMD is used to execute specific command
+
+it can be there in Docker file in one of these formats
+
+CMD program arg  --> CMD sleep 5
+CMD["prog","arg"] --> CMD ["sleep","5"]
+
+if CMD is passed while running, it overrides cmd present in docker file
+> docker run ubuntu sleep 10
+
+Entrypoint is used to send either arg or both dynamically.
+
+Different form of entrypoint is explained below:
+
+ENTRYPOINT["sleep"] --> docker run ubuntu 10
+
+-----------
+With default value
+
+ENTRYPOINT["sleep"]
+CMD["5"]
+> docker run ubuntu 10 --> sleeps for 10 sec
+> docker run ubuntu --> Sleeps for 5 seconds as default is set to 5
+
+-----------
+Setting ENTRYPOINT dynamically while running:
+docker run --entrypoint sleep2.0 ubuntu 10
+
+This will relace sleep with sleep2.0 and 5 with 10 in original docker command
+
