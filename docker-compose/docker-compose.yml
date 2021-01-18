@@ -1,0 +1,29 @@
+version: "2"
+
+services:
+    redis:
+        image: redis:4.0.2
+        
+    db:
+        image: postgres:9.4
+        environment:
+            - POSTGRES_HOST_AUTH_METHOD=trust
+            - POSTGRES_PASSWORD=password
+            - POSTGRES_USER=postgres
+        
+    vote:
+        image: voting-app
+        ports:
+            - "5000:8080"
+            
+    worker:
+        build: ./example-voting-app-master/worker
+        depends_on:
+            - db
+        
+    result:
+        image: result-app
+        ports: 
+            - "5001:80"
+        depends_on:
+            - db
